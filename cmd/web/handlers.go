@@ -14,8 +14,8 @@ func home(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	files := []string{
-		".ui/html/pages/base.tmpl",
-		".ui/html/pages/home.tmpl",
+		"./ui/html/pages/base.tmpl",
+		"./ui/html/pages/home.tmpl",
 	}
 	ts, err := template.ParseFiles(files...)
 	if err != nil {
@@ -23,7 +23,7 @@ func home(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 		return
 	}
-	err = ts.Execute(w, nil)
+	err = ts.ExecuteTemplate(w, "base", nil)
 	if err != nil {
 		log.Println(err.Error())
 		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
