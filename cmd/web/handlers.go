@@ -3,7 +3,7 @@ package main
 import (
 	"errors"
 	"fmt"
-	"html/template"
+	// "html/template"
 	"net/http"
 	"strconv"
 
@@ -29,6 +29,16 @@ func (app *application) home(w http.ResponseWriter, r *http.Request) {
 	// if err != nil {
 	// 	app.serverError(w, err)
 	// }
+
+	snippets, err := app.snippets.Latest()
+	if err != nil {
+		app.serverError(w, err)
+		return
+	}
+
+	for _, snippet := range snippets {
+		fmt.Fprintf(w, "%+v", snippet)
+	}
 }
 
 func (app *application) snippetView(w http.ResponseWriter, r *http.Request) {
