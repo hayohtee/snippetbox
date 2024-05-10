@@ -19,3 +19,5 @@
 
 # Go workspace file
 go.work
+snippetbox-mysql.session.sql
+.vscode/settings.json
