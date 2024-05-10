@@ -7,8 +7,8 @@ import (
 
 // Define a Snippet type to hold individual snippet.
 type Snippet struct {
-	ID int
-	Title string
+	ID      int
+	Title   string
 	Content string
 	Created time.Time
 	Expires time.Time
@@ -20,8 +20,18 @@ type SnippetModel struct {
 }
 
 // Insert a new snippet into the database
-func (m *SnippetModel) Insert(title, content string, expires int)(int, error) {
-	return 0, nil
+func (m *SnippetModel) Insert(title, content string, expires int) (int, error) {
+	stmt := `INSERT INTO snippets (title, content, created, expires)
+	VALUES(?, ?, UTC_TIMESTAMP(), DATE_ADD(UTC_TIME_STAMP(), INTERVAL ? DAY))`
+	result, err := m.DB.Exec(stmt, title, content, expires)
+	if err != nil {
+		return 0, err
+	}
+	id, err := result.LastInsertId()
+	if err != nil {
+		return 0, err
+	}
+	return int(id), nil
 }
 
 // Return a specific snippet from the database based on its id.
