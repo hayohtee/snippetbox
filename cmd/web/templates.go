@@ -10,12 +10,13 @@ import (
 // templateData is a type to act as the holding structure
 // for any dynamic data that we want to pass to our HTML templates.
 type templateData struct {
-	Snippet *models.Snippet
-	Snippets []*models.Snippet
+	CurrentYear int
+	Snippet     *models.Snippet
+	Snippets    []*models.Snippet
 }
 
 // Create an in memory cache for all the templates needed by the app
-func newTemplateCache()(map[string]*template.Template, error) {	
+func newTemplateCache() (map[string]*template.Template, error) {
 	cache := map[string]*template.Template{}
 	pages, err := filepath.Glob("./ui/html/pages/*.tmpl")
 	if err != nil {
