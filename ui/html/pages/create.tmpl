@@ -3,18 +3,18 @@
 {{define "main"}}
 <form action="/snippet/create" method="post">
         <div>
-            <label for="title">Title</label>
-            <input type="text" name="title">
+            <label for="form-title">Title</label>
+            <input type="text" name="title" id="form-title">
         </div>
         <div>
-            <label for="content">Content</label>
-            <textarea name="content"></textarea>
+            <label for="form-content">Content</label>
+            <textarea name="content" id="form-content"></textarea>
         </div>
         <div>
-            <label for="expires">Delete in:</label>
-            <input type="radio" name="expires" value="365" checked>One Year
-            <input type="radio" name="expires" value="7">One Week
-            <input type="radio" name="expires" value="1">One Day
+            <label for="form-expires">Delete in:</label>
+            <input type="radio" name="expires" value="365" id="form-expires" checked> One Year
+            <input type="radio" name="expires" value="7"> One Week
+            <input type="radio" name="expires" value="1"> One Day
         </div>
         <div>
             <input type="submit" value="Publish snippet">
