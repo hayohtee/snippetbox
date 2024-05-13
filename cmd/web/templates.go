@@ -14,6 +14,7 @@ type templateData struct {
 	CurrentYear int
 	Snippet     *models.Snippet
 	Snippets    []*models.Snippet
+	Form        any
 }
 
 // Create an in memory cache for all the templates needed by the app
