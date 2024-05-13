@@ -18,7 +18,7 @@
         </div>
         <div>
             <label for="form-expires">Delete in:</label>
-            {{with .Form.FieldErrors}}
+            {{with .Form.FieldErrors.Expires}}
             <label for="form-expires">{{.}}</label>
             {{end}}
             <input type="radio" name="expires" value="365" id="form-expires" {{if (eq .Form.Expires 365)}}checked{{end}}> One Year
