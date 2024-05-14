@@ -15,6 +15,7 @@ type templateData struct {
 	Snippet     *models.Snippet
 	Snippets    []*models.Snippet
 	Form        any
+	Flash       string
 }
 
 // Create an in memory cache for all the templates needed by the app
