@@ -21,3 +21,4 @@
 go.work
 snippetbox-mysql.session.sql
 .vscode/settings.json
+tls/
