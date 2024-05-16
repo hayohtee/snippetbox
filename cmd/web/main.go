@@ -1,6 +1,7 @@
 package main
 
 import (
+	"crypto/tls"
 	"database/sql"
 	"flag"
 	"github.com/alexedwards/scs/mysqlstore"
@@ -51,10 +52,13 @@ func main() {
 		sessionManager: sessionManager,
 	}
 
+	tslConfig := &tls.Config{CurvePreferences: []tls.CurveID{tls.X25519, tls.CurveP256}}
+
 	srv := &http.Server{
-		Addr:     *addr,
-		ErrorLog: errLog,
-		Handler:  app.routes(),
+		Addr:      *addr,
+		ErrorLog:  errLog,
+		Handler:   app.routes(),
+		TLSConfig: tslConfig,
 	}
 
 	infoLog.Printf("Starting server on %s", *addr)
