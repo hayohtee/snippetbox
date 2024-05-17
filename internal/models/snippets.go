@@ -6,7 +6,7 @@ import (
 	"time"
 )
 
-// Define a Snippet type to hold individual snippet.
+// Snippet a type to hold individual snippet.
 type Snippet struct {
 	ID      int
 	Title   string
@@ -15,7 +15,7 @@ type Snippet struct {
 	Expires time.Time
 }
 
-// Define a SnippetModel type which wraps a sql.DB connection pool.
+// SnippetModel a type which wraps a sql.DB connection pool.
 type SnippetModel struct {
 	DB *sql.DB
 }
@@ -35,7 +35,7 @@ func (m *SnippetModel) Insert(title, content string, expires int) (int, error) {
 	return int(id), nil
 }
 
-// Return a specific snippet from the database based on its id.
+// Get Return a specific snippet from the database based on its id.
 func (m *SnippetModel) Get(id int) (*Snippet, error) {
 	stmt := `SELECT id, title, content, created, expires FROM snippets
 	WHERE expires > UTC_TIMESTAMP() AND id = ?`
@@ -52,7 +52,7 @@ func (m *SnippetModel) Get(id int) (*Snippet, error) {
 	return s, nil
 }
 
-// Return the 10 most recently created snippets.
+// Latest Return the 10 most recently created snippets.
 func (m *SnippetModel) Latest() ([]*Snippet, error) {
 	stmt := `SELECT id, title, content, created, expires FROM snippets
 	WHERE expires > UTC_TIMESTAMP() ORDER BY id DESC LIMIT 10`
