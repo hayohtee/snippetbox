@@ -50,6 +50,7 @@ func main() {
 		templateCache:  templateCache,
 		formDecoder:    formDecoder,
 		sessionManager: sessionManager,
+		users:          &models.UserModel{DB: db},
 	}
 
 	tslConfig := &tls.Config{CurvePreferences: []tls.CurveID{tls.X25519, tls.CurveP256}}
@@ -76,6 +77,7 @@ type application struct {
 	templateCache  map[string]*template.Template
 	sessionManager *scs.SessionManager
 	formDecoder    *form.Decoder
+	users          *models.UserModel
 }
 
 func openDb(dsn string) (*sql.DB, error) {
