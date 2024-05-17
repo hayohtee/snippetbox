@@ -107,12 +107,3 @@ func (app *application) userLoginPost(w http.ResponseWriter, r *http.Request) {
 func (app *application) userLogoutPost(w http.ResponseWriter, r *http.Request) {
 	_, _ = fmt.Fprintf(w, "Logged out user")
 }
-
-// Define a snippetCreateForm struct to represent the form data and validation
-// errors for the form fields.
-type snippetCreateForm struct {
-	Title               string `form:"title"`
-	Content             string `form:"content"`
-	Expires             int    `form:"expires"`
-	validator.Validator `form:"-"`
-}
