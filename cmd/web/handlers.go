@@ -88,6 +88,26 @@ func (app *application) snippetCreatePost(w http.ResponseWriter, r *http.Request
 	http.Redirect(w, r, fmt.Sprintf("/snippet/view/%d", id), http.StatusSeeOther)
 }
 
+func (app *application) userSignup(w http.ResponseWriter, r *http.Request) {
+	_, _ = fmt.Fprintf(w, "Display a HTML form for signing up a new user...")
+}
+
+func (app *application) userSignupPost(w http.ResponseWriter, r *http.Request) {
+	_, _ = fmt.Fprintf(w, "Create a new user...")
+}
+
+func (app *application) userLogin(w http.ResponseWriter, r *http.Request) {
+	_, _ = fmt.Fprintf(w, "Display a HTML form for logging in a user...")
+}
+
+func (app *application) userLoginPost(w http.ResponseWriter, r *http.Request) {
+	_, _ = fmt.Fprintf(w, "Authenticate and login the user....")
+}
+
+func (app *application) userLogoutPost(w http.ResponseWriter, r *http.Request) {
+	_, _ = fmt.Fprintf(w, "Logged out user")
+}
+
 // Define a snippetCreateForm struct to represent the form data and validation
 // errors for the form fields.
 type snippetCreateForm struct {
