@@ -17,3 +17,9 @@ type userSignupForm struct {
 	Password            string `form:"password"`
 	validator.Validator `form:"-"`
 }
+
+type userLoginForm struct {
+	Email               string `form:"email"`
+	Password            string `form:"password"`
+	validator.Validator `form:"-"`
+}
