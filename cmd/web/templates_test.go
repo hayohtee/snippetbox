@@ -1,6 +1,7 @@
 package main
 
 import (
+	"github.com/hayohtee/snippetbox/internal/assert"
 	"testing"
 	"time"
 )
@@ -32,9 +33,7 @@ func TestHumanDate(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			hd := humanData(tt.tm)
-			if hd != tt.want {
-				t.Errorf("got %q; want %q", hd, tt.want)
-			}
+			assert.Equal(t, hd, tt.want)
 		})
 	}
 }
