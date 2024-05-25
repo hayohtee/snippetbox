@@ -29,7 +29,12 @@ func main() {
 	if err != nil {
 		errLog.Fatal(err)
 	}
-	defer db.Close()
+	defer func(db *sql.DB) {
+		err := db.Close()
+		if err != nil {
+			errLog.Fatal(err)
+		}
+	}(db)
 
 	templateCache, err := newTemplateCache()
 	if err != nil {
@@ -73,11 +78,11 @@ func main() {
 type application struct {
 	errorLog       *log.Logger
 	infoLog        *log.Logger
-	snippets       *models.SnippetModel
+	snippets       models.SnippetModelInterface
 	templateCache  map[string]*template.Template
 	sessionManager *scs.SessionManager
 	formDecoder    *form.Decoder
-	users          *models.UserModel
+	users          models.UserModelInterface
 }
 
 func openDb(dsn string) (*sql.DB, error) {
