@@ -4,22 +4,25 @@ import (
 	"bytes"
 	"github.com/hayohtee/snippetbox/internal/assert"
 	"io"
+	"log"
 	"net/http"
 	"net/http/httptest"
 	"testing"
 )
 
 func TestPing(t *testing.T) {
-	rr := httptest.NewRecorder()
-	r, err := http.NewRequest(http.MethodGet, "/", nil)
+	app := &application{
+		errorLog: log.New(io.Discard, "", 0),
+		infoLog:  log.New(io.Discard, "", 0),
+	}
+	ts := httptest.NewTLSServer(app.routes())
+	defer ts.Close()
+	rs, err := ts.Client().Get(ts.URL + "/ping")
 	if err != nil {
 		t.Fatal(err)
 	}
 
-	ping(rr, r)
-	rs := rr.Result()
-	assert.Equal(t, rs.StatusCode, http.StatusOK)
-
+	assert.Equal(t, http.StatusOK, rs.StatusCode)
 	defer func(Body io.ReadCloser) {
 		err := Body.Close()
 		if err != nil {
