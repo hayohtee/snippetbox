@@ -6,6 +6,16 @@ import (
 	"testing"
 )
 
+func TestUserSignup(t *testing.T) {
+	app := newTestApplication(t)
+	ts := newTestServer(t, app.routes())
+	defer ts.Close()
+
+	_, _, body := ts.get(t, "/user/signup")
+	csrfToken := extractCSRFToken(t, body)
+	t.Logf("CSRF token is: %s", csrfToken)
+}
+
 func TestPing(t *testing.T) {
 	app := newTestApplication(t)
 	ts := newTestServer(t, app.routes())
