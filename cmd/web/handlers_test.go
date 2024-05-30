@@ -7,6 +7,34 @@ import (
 	"testing"
 )
 
+func TestSnippetCreate(t *testing.T) {
+	app := newTestApplication(t)
+	ts := newTestServer(t, app.routes())
+	defer ts.Close()
+
+	t.Run("Unauthenticated User", func(t *testing.T) {
+		statusCode, header, _ := ts.get(t, "/snippet/create")
+
+		assert.Equal(t, http.StatusSeeOther, statusCode)
+		assert.Equal(t, header.Get("Location"), "/user/login")
+	})
+
+	t.Run("Authenticated User", func(t *testing.T) {
+		_, _, body := ts.get(t, "/user/login")
+		csrfToken := extractCSRFToken(t, body)
+
+		form := url.Values{}
+		form.Add("email", "alice@example.com")
+		form.Add("password", "pa$$word")
+		form.Add("csrf_token", csrfToken)
+		ts.postForm(t, "/user/login", form)
+
+		code, _, body := ts.get(t, "/snippet/create")
+		assert.Equal(t, http.StatusOK, code)
+		assert.StringContains(t, body, `<form action="/snippet/create" method="post">`)
+	})
+}
+
 func TestUserSignup(t *testing.T) {
 	app := newTestApplication(t)
 	ts := newTestServer(t, app.routes())
