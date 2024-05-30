@@ -210,5 +210,8 @@ func (app *application) accountView(w http.ResponseWriter, r *http.Request) {
 		app.serverError(w, err)
 		return
 	}
-	fmt.Fprint(w, user)
+
+	data := app.newTemplateData(r)
+	data.User = user
+	app.render(w, http.StatusOK, "account.tmpl", data)
 }
