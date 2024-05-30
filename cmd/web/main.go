@@ -20,6 +20,7 @@ import (
 func main() {
 	addr := flag.String("addr", ":4000", "HTTP network address")
 	dsn := flag.String("dsn", "web:#hammed1234#@/snippetbox?parseTime=true", "MySQL data source name")
+	debug := flag.Bool("debug", false, "enable debug mode")
 	flag.Parse()
 
 	infoLog := log.New(os.Stdout, "INFO\t", log.Ldate|log.Ltime)
@@ -56,6 +57,7 @@ func main() {
 		formDecoder:    formDecoder,
 		sessionManager: sessionManager,
 		users:          &models.UserModel{DB: db},
+		enableDebug:    *debug,
 	}
 
 	tslConfig := &tls.Config{CurvePreferences: []tls.CurveID{tls.X25519, tls.CurveP256}}
@@ -83,6 +85,7 @@ type application struct {
 	sessionManager *scs.SessionManager
 	formDecoder    *form.Decoder
 	users          models.UserModelInterface
+	enableDebug    bool
 }
 
 func openDb(dsn string) (*sql.DB, error) {
