@@ -28,3 +28,7 @@ func (u *UserModel) Exists(id int) (bool, error) {
 		return false, nil
 	}
 }
+
+func (u *UserModel) Get(id int) (*models.User, error) {
+	return nil, nil
+}
