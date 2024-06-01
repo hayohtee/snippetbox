@@ -226,9 +226,35 @@ func (app *application) accountView(w http.ResponseWriter, r *http.Request) {
 }
 
 func (app *application) accountPasswordUpdate(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte("Change Password"))
+	data := app.newTemplateData(r)
+	form := changePasswordForm{}
+	data.Form = form
+	app.render(w, http.StatusOK, "password.tmpl", data)
 }
 
 func (app *application) accountPasswordUpdatePost(w http.ResponseWriter, r *http.Request) {
+	var form changePasswordForm
+	err := app.decodePostForm(r, &form)
+	if err != nil {
+		app.clientError(w, http.StatusBadRequest)
+		return
+	}
+
+	form.CheckField(validator.NotBlank(form.CurrentPassword), "currentPassword",
+		"This field cannot be blank")
+	form.CheckField(validator.NotBlank(form.NewPassword), "newPassword", "This field cannot be blank")
+	form.CheckField(validator.MinChars(form.NewPassword, 8), "newPassword",
+		"This field must be at least 8 characters long")
+	form.CheckField(validator.NotBlank(form.ConfirmNewPassword), "confirmNewPassword",
+		"This field cannot be blank")
+	form.CheckField(form.NewPassword == form.ConfirmNewPassword, "confirmNewPassword",
+		"Passwords do not match")
+
+	if !form.Valid() {
+		data := app.newTemplateData(r)
+		data.Form = form
+		app.render(w, http.StatusUnprocessableEntity, "password.tmpl", data)
+		return
+	}
 
 }
