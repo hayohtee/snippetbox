@@ -224,3 +224,11 @@ func (app *application) accountView(w http.ResponseWriter, r *http.Request) {
 	data.User = user
 	app.render(w, http.StatusOK, "account.tmpl", data)
 }
+
+func (app *application) accountPasswordUpdate(w http.ResponseWriter, r *http.Request) {
+	w.Write([]byte("Change Password"))
+}
+
+func (app *application) accountPasswordUpdatePost(w http.ResponseWriter, r *http.Request) {
+
+}
